@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con Cave</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <header>
+            <h1>Con Cave</h1>
+        </header>
+        {% for message in messages %}
+            <ul>
+                <li>{{ message }}</li>
+            </ul>
+        {% endfor %}
+        <div id="forms">
+            <div id="signup">
+                <h2>Sign Up</h2>
+                <div class="tab">
+                    <button class="tablinks" onclick="openUser(event, 'Attendee')" id="defaultOpen">Attendee</button>
+                    <button class="tablinks" onclick="openUser(event, 'Organizer')">Organizer</button>
+                </div>
+    
+                <div id="Attendee" class="tabcontent">
+                    <p>
+                        <form action="/register_attendee" method="POST">
+                            {% csrf_token %}
+                            <p>First Name <input type="text" name="first_name"></p>
+                            <p>Last Name <input type="text" name="last_name"></p>
+                            <p>Email <input type="text" name="email"></p>
+                            <p>Password <input type="text" name="password"></p>
+                            <p>Confirm PW <input type="text" name="confirm_password"></p><br>
+                            <input class="button" type="submit" name="signup" value="Sign Up">
+                        </form>
+                    </p>
+                </div>
+    
+                <div id="Organizer" class="tabcontent">
+                    <p>
+                        <form action="/register_organizer" method="POST">
+                            {% csrf_token %}
+                            <p>Organization Name <input type="text" name="org_name"></p>
+                            <p>First Name <input type="text" name="first_name"></p>
+                            <p>Last Name <input type="text" name="last_name"></p>
+                            <p>Email <input type="text" name="email"></p>
+                            <p>Password <input type="text" name="password"></p>
+                            <p>Confirm PW <input type="text" name="confirm_password"></p><br>
+                            <input class="button" type="submit" name="signup" value="Sign Up">
+                        </form>
+                    </p> 
+                </div>
+    
+            </div>
+    
+            <div id="login">
+                <h2>Login</h2>
+                <p>
+                    <form action="/login" method="POST">
+                        {% csrf_token %}
+                        <p>Email <input type="text" name="email"></p>
+                        <p>Password <input type="text" name="password"></p>
+                        <input class="button" type="submit" name="login" value="Login">
+                    </form>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    document.getElementById("defaultOpen").click();
+    function openUser(evt, userType) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(userType).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    </script>
+</body>
+</html>

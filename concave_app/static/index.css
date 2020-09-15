@@ -1,0 +1,99 @@
+*{
+    background-color: #7cb8a0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1;
+    letter-spacing: 0.0375em;
+    color: white;
+}
+#wrapper{
+    background-color: #263852;
+    width: 920px;
+    margin: 0px auto;
+    height: 500px;
+    padding: 15px;
+}
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #fdfdfd;
+    width: fit-content;
+    height: fit-content;
+}
+.tab button {
+    display: block;
+    background-color: #263852;
+    color: white;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+.tab button:hover {
+background-color: rgb(236, 236, 236);
+}
+.tab button.active {
+background-color: #7cb8a0;
+}
+.tabcontent {
+float: left;
+padding: 0px 12px;
+border: 1px solid #ccc;
+width: fit-content;
+height: 300px;
+}
+input{
+    float: right;
+    margin-left: 10px;
+    background-color: white;
+    color: #263852;
+}
+#forms{
+    display: block;
+    background-color: #263852;
+}
+#signup{
+    margin-left: 100px;
+    width: 450px;
+}
+#login{
+    width: 350px;
+}
+#signup, #login{
+    display: inline-block;
+    vertical-align: top;
+    background-color: #263852;
+}
+#login form{
+    border: 1px solid #ccc;
+    width: fit-content;
+    height: fit-content;
+    width: 250px;
+    height: 140px;
+    padding: 10px;
+}
+header{
+    display: block;
+    background-color: #263852;
+    margin: 15px auto;
+    width: 50%;
+}
+h1{
+    display: block;
+    background-color: #263852;
+    margin: 15px auto auto 135px;
+    width: 50%;
+    font-size: 40px;
+    font-weight: bold;
+}
+li{
+    color: red;
+}
+h1,h2{
+    background-color: #263852;
+}
+.button{
+    padding: 5px;
+}

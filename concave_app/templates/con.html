@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con Cave</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'con.css' %}">
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <header>
+            <h1 id="header">Con Cave</h1>
+            <a href="/home" id="header" class="header_links">Home</a>
+            <a href="/viewaccount/{{request.session.user_id}}" id="header">Account</a>
+            <a href="/logout" id="header">Logout</a>
+        </header>
+
+        <div id="cons">
+            <div id="details">
+                <h2>{{clicked_con.name}}</h2>
+                <h4>{{clicked_con.description}}</h4>
+                <div class="inline">
+                    <h4 class="blue" class="inline-block">Date:</h4> <h4 class="inline-block">{{clicked_con.date}}</h4>
+                </div>
+                <div class="inline">
+                    <h4 class="blue" class="inline-block">Location:</h4> <h4 class="inline-block">{{clicked_con.location}}</h4>
+                </div>
+
+                <div class="inline">
+                    <h4 class="blue" class="inline-block">Likes:</h4> <h4>{{clicked_con.likes.count}}</h4>
+                </div>
+                <div class="inline">
+                    <h4 class="blue" class="inline-block">RSVPs:</h4> <h4>{{clicked_con.rsvps.count}}</h4>
+                </div>
+                {% if logged_attendee.is_organizer == False %}
+                    {% if logged_attendee in clicked_con.rsvps.all %}
+                        <div id="buttons">
+                            <form class="going" action="/conunrsvp/{{clicked_con.id}}"><button type="submit">Going <span>&#10003;</span> </button></form>
+                        </div>
+                        {% else %}
+                        <div id="buttons">
+                            <form class="rsvp" action="/conrsvp/{{clicked_con.id}}"><button type="submit">RSVP</button></form>
+                        </div>
+                    {% endif %}
+                    {% if logged_attendee in clicked_con.likes.all %}
+                        <div id="buttons">
+                            <form class="unlike" action="/conunlike/{{clicked_con.id}}"><button type="submit">Unlike</button></form>
+                        </div>
+                        {% else %}
+                        <div id="buttons">
+                            <form class="like" action="/conlike/{{clicked_con.id}}"><button type="submit">Like</button></form>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    {% if clicked_con.created_by.id == request.session.user_id %}
+                        <div id="buttons">
+                            <form class="org" action="/delete/{{con.id}}"><button type="submit">Delete</button></form>
+                        </div>
+                        <div id="buttons">
+                            <form class="org" action="/delete/{{con.id}}"><button type="submit">Delete</button></form>
+                        </div>
+                        {% endif %}
+                {% endif %}
+                <h5> Presented by <a href="/vieworg/{{clicked_con.created_by.id}}" id="white">{{clicked_con.created_by.org_name}}</a></h5>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

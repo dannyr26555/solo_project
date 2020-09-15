@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con Cave - Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+</head>
+<body>
+
+    <div id="wrapper">
+        <header>
+            <h1 id="header">Con Cave</h1>
+            <a href="/viewaccount/{{request.session.user_id}}" id="header" class="header_links">Account</a>
+            <a href="/logout" id="header">Logout</a>
+        </header>
+
+        <div id="all_cons">
+            <h3>All Cons</h3>
+            {% for con in all_cons %}
+                <div id="con">
+                    <p><a href="/viewcon/{{con.id}}">{{con.name}}</a></p>
+                    <p>{{con.description}}</p>
+                    <p>{{con.date}}</p>
+                    {% if logged_attendee.is_organizer == False %}
+                        {% if logged_attendee in con.rsvps.all %}
+                            <div id="buttons">
+                                <form class="going" action="/unrsvp/{{con.id}}"><button type="submit">Going <span>&#10003;</span> </button></form>
+                            </div>
+                            {% else %}
+                            <div id="buttons">
+                                <form class="rsvp" action="/rsvp/{{con.id}}"><button type="submit">RSVP</button></form>
+                            </div>
+                        {% endif %}
+                        {% if logged_attendee in con.likes.all %}
+                            <div id="buttons">
+                                <form class="unlike" action="/unlike/{{con.id}}"><button type="submit">Unlike</button></form>
+                            </div>
+                            {% else %}
+                            <div id="buttons">
+                                <form class="like" action="/like/{{con.id}}"><button type="submit">Like</button></form>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        {% if con.created_by.id == request.session.user_id %}
+                        <div id="buttons">
+                            <form class="delete" action="/delete/{{con.id}}"><button type="submit">Delete</button></form>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div id="right_panel">
+            <div id="welcome">
+                {% if logged_organizer.is_organizer == True %}
+                    <h3>Welcome, {{request.session.name}}!</h3>
+                    <h4><a href="/vieworg/{{logged_organizer.id}}" id="white">{{logged_organizer.org_name}}</a></h4>
+                {% else %}
+                    <h3>Welcome, {{request.session.name}}!</h3>
+                {% endif %}
+            </div>
+            {% if logged_organizer.is_organizer == True %}
+                <div id="add_cons">
+                    <h3 class="exclude">Add Con</h3>
+                    <form action="/create_con" class="add_cons" method="POST">
+                        {% csrf_token %}
+                        <p>Name <input type="text" name="name"></p>
+                        <p>Description <input type="text" name="description"></p>
+                        <p>Type <select name="type" id="type">
+                            <option selected="true" disabled="disabled">Please select a type</option>
+                            <option value="anime">Anime</option>
+                            <option value="business">Business</option>
+                            <option value="comics">Comics</option>
+                            <option value="furry">Furry</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="general pop culture">General Pop Culture</option>
+                            <option value="horror">Horror</option>
+                            <option value="literature">Literature</option>
+                            <option value="technology">Technology</option>
+                        </select>
+                        </p>
+                        <p>Date <input type="date" name="date" class="input"></p>
+                        <p>Location <input id="autocomplete" name="location" onFocus="geolocate()" type="text"></input></p><br>
+                        <input class="button" type="submit" name="add" value="Add">
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        function initAutocomplete() {
+          autocomplete = new google.maps.places.Autocomplete(
+              /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+              {types: ['geocode']});
+          autocomplete.addListener('place_changed', fillInAddress);
+        }
+        function fillInAddress() {
+          var place = autocomplete.getPlace();
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnlcRcOsnMpENokwWriXFuX1hPJ8FffE0&libraries=places&callback=initAutocomplete" async defer></script>
+</body>
+</html>

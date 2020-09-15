@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con Cave</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'account.css' %}">
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <header>
+            <h1 id="header">Con Cave</h1>
+            <a href="/home" id="header" class="header_links">Home</a>
+            <a href="/logout" id="header">Logout</a>
+        </header>
+
+        <div id="account">
+            {% if logged_organizer.is_organizer == True %}
+            <div id="details">
+                <form action="/edit_org" class="add_cons" method="POST">
+                    {% csrf_token %}
+                    <p>Organization Name <input type="text" name="org_name" value="{{details.org_name}}"></p>
+                    <p>First Name <input type="text" name="first_name" value="{{details.first_name}}"></p>
+                    <p>Last Name <input type="text" name="last_name" value="{{details.last_name}}"></p>
+                    <p>Email <input type="text" name="email" value="{{details.email}}"></p>
+                    <input class="button" type="submit" name="update" value="Update">
+                </form>
+            </div>
+            {% else %}
+            <div id="details">
+                <form action="/edit_att" class="add_cons" method="POST">
+                    {% csrf_token %}
+                    <p>First Name <input type="text" name="first_name" value="{{details.first_name}}"></p>
+                    <p>Last Name <input type="text" name="last_name" value="{{details.last_name}}"></p>
+                    <p>Email <input type="text" name="email" value="{{details.email}}"></p>
+                    <input class="button" type="submit" name="update" value="Update">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

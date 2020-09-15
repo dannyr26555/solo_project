@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Con Cave</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'user.css' %}">
+</head>
+<body>
+
+    <div id="wrapper">
+
+        <header>
+            <h1 id="header">Con Cave</h1>
+            <a href="/home" id="header" class="header_links">Home</a>
+            <a href="/viewaccount/{{request.session.user_id}}" id="header">Account</a>
+            <a href="/logout" id="header">Logout</a>
+        </header>
+
+        <div id="name">
+            <h2>{{clicked_att.first_name}} {{clicked_att.last_name}}</h2>
+        </div>
+
+        <div id="all_liked_cons">
+            {% if clicked_att in all_liked_cons.likes.all %}
+            {% endif %}
+        </div>
+
+        <div id="all_rsvpd_cons">
+            {% if clicked_att in all_rsvpd_cons.likes.all %}
+            {% endif %}
+        </div>
+
+</body>
+</html>
