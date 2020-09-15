@@ -92,6 +92,7 @@
 
     </div>
     <script type="text/javascript">
+        var mapsKey = config.MAPS_KEY;
         function initAutocomplete() {
           autocomplete = new google.maps.places.Autocomplete(
               /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
@@ -102,6 +103,8 @@
           var place = autocomplete.getPlace();
         }
     </script>
+    {% load static %}
+    <script type='text/javascript' src="{% static 'config.js' %}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnlcRcOsnMpENokwWriXFuX1hPJ8FffE0&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
